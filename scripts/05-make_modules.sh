@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TEMPSTORAGE="/tmp/kmtmp-$$"
+KMTMPSTOR="/tmp/kmtmp-$$"
 
 if [ -z "$1" -o -z "$2" ]; then
   >&2 echo "$0 <kernel version> <output directory>"
@@ -22,13 +22,13 @@ cd /usr/src/linux || bail "cd /usr/src/linux failed!"
 # Error Checking
 if [ ! -d ${KSAVEDIR} ]; then bail "${KSAVEDIR} not found!"; fi
 if [ ! -r .config ]; then bail ".config not found!"; fi
-if [ -d ${TEMPSTORAGE} ]; then bail "${TEMPSTORAGE} exists!"; fi
+if [ -d ${KMTMPSTOR} ]; then bail "${KMTMPSTOR} exists!"; fi
 
-mkdir -p ${TEMPSTORAGE}/lib/modules || bail "mkdir -p ${TEMPSTORAGE}/lib/modules failed!"
+mkdir -p ${KMTMPSTOR}/lib/modules || bail "mkdir -p ${KMTMPSTOR}/lib/modules failed!"
 make modules_install || bail "make modules_install"
 echo
 
-mv /lib/modules/${KFULLV}/ ${TEMPSTORAGE}/lib/modules/ || bail "mv /lib/modules/${KFULLV}/ ${TEMPSTORAGE}/lib/modules/ failed!"
+mv /lib/modules/${KFULLV}/ ${KMTMPSTOR}/lib/modules/ || bail "mv /lib/modules/${KFULLV}/ ${KMTMPSTOR}/lib/modules/ failed!"
 
-dir2xzm ${TEMPSTORAGE} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm && \
-rm -rf ${TEMPSTORAGE} || bail "dir2xzm ${TEMPSTORAGE} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm"
+dir2xzm ${KMTMPSTOR} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm && \
+rm -rf ${KMTMPSTOR} || bail "dir2xzm ${KMTMPSTOR} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm"
