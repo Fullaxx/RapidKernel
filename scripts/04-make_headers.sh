@@ -2,7 +2,7 @@
 
 # http://lwn.net/Articles/244375/
 
-TEMPSTORAGE="/tmp/khtmp-$$"
+KHTMPSTOR="/tmp/khtmp-$$"
 HARCH=`uname -m`
 
 if [ -z "$1" ]; then
@@ -26,14 +26,14 @@ if [ ! -d ${KSAVEDIR} ]; then bail "${KSAVEDIR} not found!"; fi
 if [ ! -r .config ]; then bail ".config not found!"; fi
 if [ ! -f Module.symvers ]; then bail "Module.symvers not found!"; fi
 if [ ! -f arch/x86/boot/bzImage ]; then bail "arch/x86/boot/bzImage not found!"; fi
-if [ -d ${TEMPSTORAGE} ]; then bail "${TEMPSTORAGE} exists!"; fi
+if [ -d ${KHTMPSTOR} ]; then bail "${KHTMPSTOR} exists!"; fi
 
-mkdir -p ${TEMPSTORAGE}/usr || bail "mkdir -p ${TEMPSTORAGE}/usr failed!"
-make headers_install ARCH=${HARCH} INSTALL_HDR_PATH=${TEMPSTORAGE}/usr || bail "make headers_install failed!"
+mkdir -p ${KHTMPSTOR}/usr || bail "mkdir -p ${KHTMPSTOR}/usr failed!"
+make headers_install ARCH=${HARCH} INSTALL_HDR_PATH=${KHTMPSTOR}/usr || bail "make headers_install failed!"
 echo
 
-find ${TEMPSTORAGE}/usr/ -name ..install.cmd -exec rm {} \;
-find ${TEMPSTORAGE}/usr/ -name .install -exec rm {} \;
+find ${KHTMPSTOR}/usr/ -name ..install.cmd -exec rm {} \;
+find ${KHTMPSTOR}/usr/ -name .install -exec rm {} \;
 
-dir2xzm ${TEMPSTORAGE} ${KSAVEDIR}/kernel-headers.xzm && \
-rm -rf ${TEMPSTORAGE} || bail "dir2xzm ${TEMPSTORAGE} ${KSAVEDIR}/kernel-headers.xzm"
+dir2xzm ${KHTMPSTOR} ${KSAVEDIR}/kernel-headers.xzm && \
+rm -rf ${KHTMPSTOR} || bail "dir2xzm ${KHTMPSTOR} ${KSAVEDIR}/kernel-headers.xzm"
