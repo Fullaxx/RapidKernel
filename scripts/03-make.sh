@@ -22,6 +22,10 @@ if [ ! -r .config ]; then bail ".config not found!"; fi
 
 cp -v .config ${KSAVEDIR}/config || bail "cp -v .config ${KSAVEDIR}/config failed!"
 make -j `nproc` || exit 1
+
+# Make modules before cleaning up the source tree.
+# This does some magic in Module.symvers that fixes building the NVIDIA kernel modules.
+make -j `nproc` modules || exit 1
 echo
 
 cp -v Module.symvers ${KSAVEDIR}/ || bail "cp -v Module.symvers ${KSAVEDIR}/ failed!"
