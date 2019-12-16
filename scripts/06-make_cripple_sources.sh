@@ -43,9 +43,8 @@ make scripts
 echo
 
 # Comment these out if you want to keep them
-rm -rf Documentation/ja_JP
-rm -rf Documentation/ko_KR
-rm -rf Documentation/zh_CN
+rm -rf Documentation/??_??
+rm -rf Documentation/translations
 
 # Remove a lot of stuff (not Documentation)
 rm -rf .config.old
