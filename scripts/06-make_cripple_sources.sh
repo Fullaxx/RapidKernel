@@ -58,27 +58,32 @@ rm -rf REPORTING-BUGS
 
 ls -1d arch/* | grep -v x86 | grep -v Kconfig | xargs rm -rf
 
-find block crypto drivers fs init ipc kernel lib mm net samples security sound tools virt \
+find . -type f -name .gitignore -exec rm {} \;
+find . -type f -name .gitattributes -exec rm {} \;
+find . -type f -name .mailmap -exec rm {} \;
+find . -type f -name .cocciconfig -exec rm {} \;
+
+# DO NOT CLEAN THE TOOLS DIR LIKE THIS
+find block crypto drivers fs init ipc kernel lib mm net samples security sound virt \
 -type f | grep -v Makefile | grep -v Kconfig | grep -v Kbuild | xargs rm
 
-find . -type d -empty | xargs -r rmdir
-find . -type d -empty | xargs -r rmdir
-find . -type d -empty | xargs -r rmdir
-find . -type d -empty | xargs -r rmdir
-find . -type d -empty | xargs -r rmdir
-find . -type d -empty | xargs -r rmdir
-find . -type d -empty | xargs -r rmdir
-find . -type f -name .gitignore -exec rm {} \;
-find . -type f -name .mailmap -exec rm {} \;
+# Attempt to clean tools dir
+rm -rf tools/{accounting,cgroup,firewire,gpio,hv,iio,kvm,laptop,leds,net,nfsd,pci,pcmcia,perf,power,spi,testing,thermal,time,usb,virtio,vm}
 
-find arch -name *.c -exec rm {} \;
-find . -type f -name *.tst -exec rm {} \;
+find . -type d -empty | xargs -r rmdir
+find . -type d -empty | xargs -r rmdir
+find . -type d -empty | xargs -r rmdir
+find . -type d -empty | xargs -r rmdir
+find . -type d -empty | xargs -r rmdir
+find . -type d -empty | xargs -r rmdir
+find . -type d -empty | xargs -r rmdir
+find . -type d -empty | xargs -r rmdir
+
+find arch -name '*.c' -exec rm {} \;
+find . -type f -name '*.tst' -exec rm {} \;
 find . -type f -name '*.cmd' -exec rm {} \;
-find . -type f -name *.S -exec rm {} \;
-find . -type l -name *.S -exec rm {} \;
-
-find tools -type l -name *.c -exec rm {} \;
-find tools -type l -name *.h -exec rm {} \;
+find . -type f -name '*.S' -exec rm {} \;
+find . -type l -name '*.S' -exec rm {} \;
 
 # compressing the docs into a tar.xz appears to give better module size that leaving it alone
 tar Jcf Documentation.tar.xz Documentation && rm -r Documentation
