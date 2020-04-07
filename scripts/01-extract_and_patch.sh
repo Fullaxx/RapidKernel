@@ -3,8 +3,8 @@
 TEMPSTORAGE="/tmp/ktmp-$$"
 PERMTESTFILE="TEST-$$-TEST-$$-TEST.test"
 
-if [ -z "$1" ]; then
-  >&2 echo "$0 <kernel version>"
+if [ "$#" -ne "2" ]; then
+  >&2 echo "$0 <kernel version> <old config>"
   exit 1
 fi
 
@@ -17,6 +17,7 @@ fi
 
 ORIGIN=`pwd`
 KFULLV="$1"
+KOLDCONFIG="$2"
 KMAJV=`echo ${KFULLV} | cut -d. -f1-2`
 
 # Run a quick check to make sure we aren't attempting anything outlandish :-)
@@ -28,6 +29,7 @@ cd /usr/src/ || bail "cd /usr/src/ failed!"
 touch ${PERMTESTFILE} && rm ${PERMTESTFILE} || exit 1
 if [ -d ${TEMPSTORAGE} ]; then bail "${TEMPSTORAGE} exists!"; fi
 mkdir ${TEMPSTORAGE} || bail "mkdir ${TEMPSTORAGE} failed!"
+if [ ! -r ${KOLDCONFIG} ]; then bail "${KOLDCONFIG} not found!"; fi
 
 # Use a local file or download what we need
 if [ -n "${LOCALKERNELSTORAGEDIR}" ]; then
@@ -55,3 +57,10 @@ tar cf linux-${KFULLV}-src.tar linux-${KFULLV} || bail "tar cf linux-${KFULLV}-s
 
 # Clean Up
 rm -rf ${TEMPSTORAGE}
+
+cd /usr/src/linux || bail "cd /usr/src/linux failed!"
+if [ -f .config ]; then bail "/usr/src/linux/.config exists!"; fi
+cp -v ${KOLDCONFIG} /usr/src/linux/.config || bail "cp ${KOLDCONFIG} /usr/src/linux/.config failed!"
+KOLDV=`cat /usr/src/linux/.config | grep '^# Linux/x86' | grep 'Kernel Configuration$' | awk '{print $3}'`
+sed -e "s@Linux/x86 ${KOLDV} Kernel Configuration@Linux/x86 ${KFULLV} Kernel Configuration@" -i .config
+make menuconfig || bail "make menuconfig failed!"
