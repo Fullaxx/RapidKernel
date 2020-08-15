@@ -16,6 +16,7 @@ case "${KMAJV}" in
    4.4) echo "Kernel  4.4 Supported" ;;
    4.9) echo "Kernel  4.9 Supported" ;;
   4.14) echo "Kernel 4.14 Supported" ;;
+  4.19) echo "Kernel 4.19 Supported" ;;
      *) bail "${KMAJV}: Unsupported Kernel Version"; exit 1 ;;
 esac
 
