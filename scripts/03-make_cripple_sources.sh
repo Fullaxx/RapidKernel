@@ -18,6 +18,7 @@ fi
 KSAVEDIR="$1"
 
 if [ ! -r ${KSAVEDIR}/config ]; then bail "${KSAVEDIR}/config not found!"; fi
+if [ ! -r ${KSAVEDIR}/System.map ]; then bail "${KSAVEDIR}/System.map not found!"; fi
 if [ ! -r ${KSAVEDIR}/Module.symvers ]; then bail "${KSAVEDIR}/Module.symvers not found!"; fi
 KFULLV=`cat ${KSAVEDIR}/config | grep '^# Linux/x86' | grep 'Kernel Configuration$' | awk '{print $3}'`
 
@@ -84,6 +85,7 @@ find . -type l -name '*.S' -exec rm {} \;
 # compressing the docs into a tar.xz appears to give better module size than leaving it alone
 tar Jcf Documentation.tar.xz Documentation && rm -r Documentation
 
+cp ${KSAVEDIR}/System.map ./System.map || bail "cp ${KSAVEDIR}/System.map ./System.map failed!"
 cp ${KSAVEDIR}/Module.symvers ./Module.symvers || bail "cp ${KSAVEDIR}/Module.symvers ./Module.symvers failed!"
 
 echo -n "Cripple Sources Size: "
