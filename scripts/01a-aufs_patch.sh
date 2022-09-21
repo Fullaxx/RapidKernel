@@ -28,6 +28,9 @@ case "${KMAJV}" in
    5.4)
     AUFSREPO="https://github.com/sfjro/aufs5-standalone.git"
     AUFSBRANCH="aufs5.4.3" ;;
+  5.10)
+    AUFSREPO="https://github.com/sfjro/aufs5-standalone.git"
+    AUFSBRANCH="aufs5.10.140" ;;
   *) bail "${KMAJV}: Unsupported AUFS Version"; exit 1 ;;
 esac
 
