@@ -17,6 +17,11 @@ KHTMPSTOR="/tmp/khtmp-$$"
 KMTMPSTOR="/tmp/kmtmp-$$"
 KSAVEDIR="$1"
 
+SCRLOC=`dirname $0`
+if [ "${SCRLOC}" == "." ]; then
+  SCRLOC=`pwd`
+fi
+
 cd /usr/src/linux || bail "cd /usr/src/linux failed!"
 
 # Error Checking
@@ -69,3 +74,6 @@ dir2xzm ${KMTMPSTOR} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm && \
 rm -rf ${KMTMPSTOR} || bail "dir2xzm ${KMTMPSTOR} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm"
 
 cp -v System.map ${KSAVEDIR}/
+
+cd ${SCRLOC}
+./02b-make_cripple_sources.sh ${KSAVEDIR}
