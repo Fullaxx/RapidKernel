@@ -17,6 +17,10 @@ KSAVEDIR="$1"
 
 cd /usr/src/linux || bail "cd /usr/src/linux failed!"
 
+# Error Checking
+if [ ! -d ${KSAVEDIR} ]; then bail "${KSAVEDIR} not found!"; fi
+if [ ! -r .config ]; then bail ".config not found!"; fi
+
 # Make Modules
 
 # Error Checking
