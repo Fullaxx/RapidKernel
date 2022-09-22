@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Make Headers
+# http://lwn.net/Articles/244375/
+
 if [ -z "$1" ]; then
   echo "$0 <output directory>"
   exit 1
@@ -16,21 +19,11 @@ HARCH=`uname -m`
 KHTMPSTOR="/tmp/khtmp-$$"
 KSAVEDIR="$1"
 
-SCRLOC=`dirname $0`
-if [ "${SCRLOC}" == "." ]; then
-  SCRLOC=`pwd`
-fi
-
 cd /usr/src/linux || bail "cd /usr/src/linux failed!"
 
 # Error Checking
 if [ ! -d ${KSAVEDIR} ]; then bail "${KSAVEDIR} not found!"; fi
 if [ ! -r .config ]; then bail ".config not found!"; fi
-
-# Make Headers
-# http://lwn.net/Articles/244375/
-
-# Error Checking
 if [ ! -f Module.symvers ]; then bail "Module.symvers not found!"; fi
 if [ ! -f arch/x86/boot/bzImage ]; then bail "arch/x86/boot/bzImage not found!"; fi
 if [ -d ${KHTMPSTOR} ]; then bail "${KHTMPSTOR} exists!"; fi

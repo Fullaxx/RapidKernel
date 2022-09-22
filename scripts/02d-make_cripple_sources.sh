@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Make Cripple Sources
+
 KSTMPSTOR="/tmp/kstmp-$$"
 PERMTESTFILE="TEST-$$-TEST-$$-TEST.test"
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Make Modules
+
 if [ -z "$1" ]; then
   echo "$0 <output directory>"
   exit 1
@@ -20,8 +22,6 @@ cd /usr/src/linux || bail "cd /usr/src/linux failed!"
 # Error Checking
 if [ ! -d ${KSAVEDIR} ]; then bail "${KSAVEDIR} not found!"; fi
 if [ ! -r .config ]; then bail ".config not found!"; fi
-
-# Make Modules
 
 # Error Checking
 if [ -d ${KMTMPSTOR} ]; then bail "${KMTMPSTOR} exists!"; fi
