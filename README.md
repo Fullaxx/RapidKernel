@@ -19,7 +19,7 @@ mkdir -p /tmp/5.10.144
 # Lets build a kernel
 cd scripts
 sudo ./01-prepare.sh 5.10.144 /opt/RL/packages/rapidkernels/64/5.4.214/config
-sudo ./02-make.sh /tmp/5.10.144/
+sudo ./02-build.sh /tmp/5.10.144/
 
 # Find all your new files
 ls -l /tmp/5.10.144/
