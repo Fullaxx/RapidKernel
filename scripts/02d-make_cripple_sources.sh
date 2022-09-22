@@ -20,8 +20,9 @@ fi
 KSAVEDIR="$1"
 
 if [ ! -r ${KSAVEDIR}/config ]; then bail "${KSAVEDIR}/config not found!"; fi
-if [ ! -r ${KSAVEDIR}/System.map ]; then bail "${KSAVEDIR}/System.map not found!"; fi
 if [ ! -r ${KSAVEDIR}/Module.symvers ]; then bail "${KSAVEDIR}/Module.symvers not found!"; fi
+if [ ! -r ${KSAVEDIR}/System.map ]; then bail "${KSAVEDIR}/System.map not found!"; fi
+if [ ! -r ${KSAVEDIR}/module.lds ]; then bail "${KSAVEDIR}/module.lds not found!"; fi
 KFULLV=`cat ${KSAVEDIR}/config | grep '^# Linux/x86' | grep 'Kernel Configuration$' | awk '{print $3}'`
 
 cd /usr/src/ || bail "cd /usr/src/ failed!"
@@ -89,6 +90,7 @@ tar Jcf Documentation.tar.xz Documentation && rm -r Documentation
 
 cp ${KSAVEDIR}/System.map ./System.map || bail "cp ${KSAVEDIR}/System.map ./System.map failed!"
 cp ${KSAVEDIR}/Module.symvers ./Module.symvers || bail "cp ${KSAVEDIR}/Module.symvers ./Module.symvers failed!"
+cp ${KSAVEDIR}/module.lds ./scripts/ || bail "cp ${KSAVEDIR}/module.lds ./scripts/ failed!"
 
 echo -n "Cripple Sources Size: "
 du -sh . | awk '{print $1}'

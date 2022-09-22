@@ -29,7 +29,7 @@ echo
 make -j `nproc` modules || bail "Error during make modules"
 echo
 
-for FILE in arch/x86/boot/bzImage Module.symvers System.map; do
+for FILE in arch/x86/boot/bzImage Module.symvers System.map scripts/module.lds; do
   cp -v ${FILE} ${KSAVEDIR}/ || bail "cp -v ${FILE} ${KSAVEDIR}/ failed!"
 done
 echo
