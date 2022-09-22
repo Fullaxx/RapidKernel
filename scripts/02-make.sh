@@ -36,7 +36,7 @@ make -j `nproc` || bail "Error during make"
 make -j `nproc` modules || bail "Error during make modules"
 echo
 
-cp -v arch/x86/boot/bzImage Module.symvers ${KSAVEDIR}/ || bail "cp -v arch/x86/boot/bzImage Module.symvers ${KSAVEDIR}/ failed!"
+cp -v arch/x86/boot/bzImage Module.symvers System.map ${KSAVEDIR}/ || bail "cp -v arch/x86/boot/bzImage Module.symvers System.map ${KSAVEDIR}/ failed!"
 echo
 
 # Make Headers
@@ -57,23 +57,8 @@ find ${KHTMPSTOR}/usr/ -name .install -exec rm {} \;
 dir2xzm ${KHTMPSTOR} ${KSAVEDIR}/kernel-headers.xzm && \
 rm -rf ${KHTMPSTOR} || bail "dir2xzm ${KHTMPSTOR} ${KSAVEDIR}/kernel-headers.xzm"
 
-# Make Modules
-
-# Error Checking
-if [ -d ${KMTMPSTOR} ]; then bail "${KMTMPSTOR} exists!"; fi
-KFULLV=`cat .config | grep '^# Linux/x86' | grep 'Kernel Configuration$' | awk '{print $3}'`
-
-mkdir -p ${KMTMPSTOR}/lib/modules || bail "mkdir -p ${KMTMPSTOR}/lib/modules failed!"
-make modules_install || bail "make modules_install"
-echo
-
-if [ ! -d /lib/modules/${KFULLV} ]; then bail "/lib/modules/${KFULLV} does not exist"; fi
-mv /lib/modules/${KFULLV}/ ${KMTMPSTOR}/lib/modules/ || bail "mv /lib/modules/${KFULLV}/ ${KMTMPSTOR}/lib/modules/ failed!"
-
-dir2xzm ${KMTMPSTOR} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm && \
-rm -rf ${KMTMPSTOR} || bail "dir2xzm ${KMTMPSTOR} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm"
-
-cp -v System.map ${KSAVEDIR}/
+cd ${SCRLOC}
+./02a-make_modules.sh ${KSAVEDIR}
 
 cd ${SCRLOC}
 ./02b-make_cripple_sources.sh ${KSAVEDIR}
