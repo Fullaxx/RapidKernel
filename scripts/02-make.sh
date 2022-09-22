@@ -58,7 +58,7 @@ dir2xzm ${KHTMPSTOR} ${KSAVEDIR}/kernel-headers.xzm && \
 rm -rf ${KHTMPSTOR} || bail "dir2xzm ${KHTMPSTOR} ${KSAVEDIR}/kernel-headers.xzm"
 
 cd ${SCRLOC}
-./02a-make_modules.sh ${KSAVEDIR}
+./02b-make_modules.sh ${KSAVEDIR}
 
 cd ${SCRLOC}
-./02b-make_cripple_sources.sh ${KSAVEDIR}
+./02c-make_cripple_sources.sh ${KSAVEDIR}
