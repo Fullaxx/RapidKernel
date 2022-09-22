@@ -37,10 +37,10 @@ cp -v arch/x86/boot/bzImage Module.symvers System.map ${KSAVEDIR}/ || bail "cp -
 echo
 
 cd ${SCRLOC}
-./02a-make_headers.sh ${KSAVEDIR}
+./02b-make_headers.sh ${KSAVEDIR}
 
 cd ${SCRLOC}
-./02b-make_modules.sh ${KSAVEDIR}
+./02c-make_modules.sh ${KSAVEDIR}
 
 cd ${SCRLOC}
-./02c-make_cripple_sources.sh ${KSAVEDIR}
+./02d-make_cripple_sources.sh ${KSAVEDIR}
