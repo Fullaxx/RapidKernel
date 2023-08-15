@@ -31,16 +31,25 @@ case "${KMAJV}" in
   5.10)
     AUFSREPO="https://github.com/sfjro/aufs5-standalone.git"
     AUFSBRANCH="aufs5.10.140" ;;
+  5.15)
+    AUFSREPO="https://github.com/sfjro/aufs5-standalone.git"
+    AUFSBRANCH="aufs5.15.41" ;;
   *) bail "${KMAJV}: Unsupported AUFS Version"; exit 1 ;;
 esac
 
 git clone ${AUFSREPO} ${TEMPSTORAGE}/${AUFSGITDIR} -b ${AUFSBRANCH} || bail "git clone ${AUFSREPO} ${TEMPSTORAGE}/${AUFSGITDIR} -b ${AUFSBRANCH} failed!"
 
 echo "Patching AUFS"
+echo "Applying aufs?-kbuild.patch ..."
 patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-kbuild.patch || bail "patching aufs?-kbuild.patch"
+echo "Applying aufs?-base.patch ..."
 patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-base.patch || bail "patching aufs?-base.patch"
-patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-mmap.patch || bail "patching aufs?-mmap.patch"
+#echo "Applying aufs?-mmap.patch ..."
+#patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-mmap.patch || bail "patching aufs?-mmap.patch"
+echo "Copying docs/fs ..."
 cp -r ${TEMPSTORAGE}/${AUFSGITDIR}/{Documentation,fs} ./ || bail "patching aufs docs"
+echo "Applying aufs?-mmap.patch ..."
+patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-mmap.patch || bail "patching aufs?-mmap.patch"
 
 case "${KMAJV}" in
   3.1?) cp ${TEMPSTORAGE}/${AUFSGITDIR}/include/uapi/linux/aufs_type.h include/uapi/linux/ || bail "patching aufs header" ;;
