@@ -44,12 +44,10 @@ echo "Applying aufs?-kbuild.patch ..."
 patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-kbuild.patch || bail "patching aufs?-kbuild.patch"
 echo "Applying aufs?-base.patch ..."
 patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-base.patch || bail "patching aufs?-base.patch"
-#echo "Applying aufs?-mmap.patch ..."
-#patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-mmap.patch || bail "patching aufs?-mmap.patch"
-echo "Copying docs/fs ..."
-cp -r ${TEMPSTORAGE}/${AUFSGITDIR}/{Documentation,fs} ./ || bail "patching aufs docs"
 echo "Applying aufs?-mmap.patch ..."
 patch -p1 < ${TEMPSTORAGE}/${AUFSGITDIR}/aufs?-mmap.patch || bail "patching aufs?-mmap.patch"
+echo "Copying docs/fs ..."
+cp -r ${TEMPSTORAGE}/${AUFSGITDIR}/{Documentation,fs} ./ || bail "patching aufs docs"
 
 case "${KMAJV}" in
   3.1?) cp ${TEMPSTORAGE}/${AUFSGITDIR}/include/uapi/linux/aufs_type.h include/uapi/linux/ || bail "patching aufs header" ;;
