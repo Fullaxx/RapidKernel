@@ -32,6 +32,7 @@ make modules_install || bail "make modules_install"
 echo
 
 if [ ! -d /lib/modules/${KFULLV} ]; then bail "/lib/modules/${KFULLV} does not exist"; fi
+rm -f /lib/modules/${KFULLV}/modules.{dep,dep.bin}
 mv /lib/modules/${KFULLV}/ ${KMTMPSTOR}/lib/modules/ || bail "mv /lib/modules/${KFULLV}/ ${KMTMPSTOR}/lib/modules/ failed!"
 
 dir2xzm ${KMTMPSTOR} ${KSAVEDIR}/000-kmods-${KFULLV}.xzm && \
