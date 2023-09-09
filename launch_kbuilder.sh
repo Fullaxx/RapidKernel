@@ -22,7 +22,6 @@ if [ -e ${RKDIR}/patches ]; then
   DOCKERPATCHESARGUMENT="-v ${PATCHES}:/tmp/patches:ro"
 fi
 
-mkdir -p ${NEWKVERS}
 sudo docker run -it --rm --name kbuilder \
 -e OLDKVERS="${OLDKVERS}" \
 -e NEWKVERS="${NEWKVERS}" \
