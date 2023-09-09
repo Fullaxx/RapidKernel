@@ -17,6 +17,11 @@ NEWKVERS="$2"
 OLDKPKG="${RLPKGSDIR}/rapidkernels/64/${OLDKVERS}"
 NEWKPKG="${RLPKGSDIR}/rapidkernels/64/${NEWKVERS}"
 
+if [ ! -d ${OLDKPKG} ]; then
+  echo "${OLDKPKG} does not exist!"
+  exit 2
+fi
+
 if [ -e ${RKDIR}/patches ]; then
   PATCHES=`realpath ${RKDIR}/patches`
   DOCKERPATCHESARGUMENT="-v ${PATCHES}:/tmp/patches:ro"
