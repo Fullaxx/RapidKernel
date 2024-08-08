@@ -20,6 +20,7 @@ case "${KMAJV}" in
    5.4) echo "Kernel  5.4 Supported" ;;
   5.10) echo "Kernel 5.10 Supported" ;;
   5.15) echo "Kernel 5.15 Supported" ;;
+   6.1) echo "Kernel  6.1 Supported" ;;
      *) bail "${KMAJV}: Unsupported Kernel Version"; exit 1 ;;
 esac
 
@@ -27,6 +28,7 @@ case "${KMAJV}" in
   3.*) KMAJDIR="v3.x" ;;
   4.*) KMAJDIR="v4.x" ;;
   5.*) KMAJDIR="v5.x" ;;
+  6.*) KMAJDIR="v6.x" ;;
     *) bail "${KMAJV}: Unsupported Kernel Version"; exit 1 ;;
 esac
 

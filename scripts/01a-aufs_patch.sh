@@ -34,6 +34,9 @@ case "${KMAJV}" in
   5.15)
     AUFSREPO="https://github.com/sfjro/aufs5-standalone.git"
     AUFSBRANCH="aufs5.15.41" ;;
+   6.1)
+    AUFSREPO="https://github.com/sfjro/aufs5-standalone.git"
+    AUFSBRANCH="aufs6.1" ;;
   *) bail "${KMAJV}: Unsupported AUFS Version"; exit 1 ;;
 esac
 
@@ -53,6 +56,7 @@ case "${KMAJV}" in
   3.1?) cp ${TEMPSTORAGE}/${AUFSGITDIR}/include/uapi/linux/aufs_type.h include/uapi/linux/ || bail "patching aufs header" ;;
    4.*) cp ${TEMPSTORAGE}/${AUFSGITDIR}/include/uapi/linux/aufs_type.h include/uapi/linux/ || bail "patching aufs header" ;;
    5.*) cp ${TEMPSTORAGE}/${AUFSGITDIR}/include/uapi/linux/aufs_type.h include/uapi/linux/ || bail "patching aufs header" ;;
+   6.*) cp ${TEMPSTORAGE}/${AUFSGITDIR}/include/uapi/linux/aufs_type.h include/uapi/linux/ || bail "patching aufs header" ;;
      *) cp ${TEMPSTORAGE}/${AUFSGITDIR}/include/linux/aufs_type.h include/linux/ || bail "patching aufs header" ;;
 esac
 
