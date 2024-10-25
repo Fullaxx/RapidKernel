@@ -16,7 +16,8 @@ In Step 1, you will need an old config to import.
 # Create a directory for storage
 mkdir -p /tmp/5.10.144
 
-# Lets build a kernel
+# Configure kernel 5.10.144 using 5.4.214/config as a starting point
+# then build 5.10.144 and save articats in /tmp/5.10.144/
 cd scripts
 sudo ./01-prepare.sh 5.10.144 /opt/RL/packages/rapidkernels/64/5.4.214/config
 sudo ./02-build.sh /tmp/5.10.144/
